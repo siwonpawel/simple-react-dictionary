@@ -1,0 +1,63 @@
+.app-wrapper {
+  width: 80%;
+  height: 100vh;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  -webkit-box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+  text-transform: uppercase;
+}
+
+.main-header {
+  font-size: 3em;
+  background: #3f3f3f;
+  color: #898989;
+}
+.main-footer {
+  font-size: 1.5em;
+  background: #3f3f3f;
+  color: #898989;
+}
+
+.dictionary {
+  width: 80%;
+  height: 60vh;
+  margin: 0 auto;
+  border: 0.5px solid black;
+  border-radius: 5px;
+  -webkit-box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+}
+
+.dict-header {
+  width: 100%;
+  font-size: 1.4em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+.dict-logic {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.input-word {
+  width: 50%;
+  margin: 5px 5px;
+  height: 40vh;
+}
+.output-word {
+  width: 50%;
+  height: 40vh;
+  margin: 5px 5px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+}
