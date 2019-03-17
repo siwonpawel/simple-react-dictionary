@@ -2,13 +2,12 @@ package psk.dictionary.service;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
-import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParseException;
 
 import psk.dictionary.model.Dictionary;
 
@@ -74,7 +73,7 @@ public class DecodeFile {
 		}
 		
 		if(bLanguage == null || tLanguage == null) {
-			throw new ParseException();
+			throw new ParseException("", 1);
 		}
 		
 		map.put(type.BASE, bLanguage);
