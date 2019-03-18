@@ -7,7 +7,7 @@ class Dictionary extends Component {
     inputLang: "POLSKI",
     outputLang: "ANGIELSKI",
     inputWord: "",
-    textareaSize: { minRows: 18, maxRows: 18 }
+    textareaSize: { minRows: 12, maxRows: 12 }
   };
   onTranslateHandler = () => {
     console.log(`Input word: ${this.state.inputWord}`);
@@ -17,13 +17,9 @@ class Dictionary extends Component {
     return (
       <div className="dictionary">
         <header className="dict-header">
-          <p>
-            {this.state.inputLang}
-          </p>
+          <p>{this.state.inputLang}</p>
 
-          <p>
-            {this.state.outputLang}
-          </p>
+          <p>{this.state.outputLang}</p>
         </header>
         <Button
           onClick={() => {
