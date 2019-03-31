@@ -1,0 +1,92 @@
+{
+	"info": {
+		"_postman_id": "beb47c84-b828-4da5-b56a-a980fa5e8989",
+		"name": "dictionary",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pobranie listy słowników",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/dictionary",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"dictionary"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pobranie słowa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/api/dictionary/pl/en/kot",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"dictionary",
+						"pl",
+						"en",
+						"kot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "dodanie słów",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"translations\": [\"pussy\"]\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/dictionary/pl/en/kot",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"dictionary",
+						"pl",
+						"en",
+						"kot"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

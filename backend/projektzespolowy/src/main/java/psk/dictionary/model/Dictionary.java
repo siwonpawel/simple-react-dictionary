@@ -1,8 +1,10 @@
 package psk.dictionary.model;
 
+import java.util.Collection;
 import java.util.List;
 
 import psk.dictionary.exception.NodeNotFound;
+import psk.dictionary.exception.WordNotFound;
 
 public class Dictionary {
 
@@ -19,10 +21,15 @@ public class Dictionary {
     }
     
     public void addWord(String baseLanguageWord, String translatedWord) {
-    	char[] baseLanguageWordChars = baseLanguageWord.toCharArray();
     	
-    	DictionaryNode activeNode = initNode;
-    	for(int i = 0; i < baseLanguageWordChars.length; i++) {
+    	char[] baseLanguageWordChars = baseLanguageWord.toCharArray();
+
+    	DictionaryNode activeNode = getWordNode(baseLanguageWordChars, initNode);
+    	activeNode.addTranslation(translatedWord);
+    }
+
+	private DictionaryNode getWordNode(char[] baseLanguageWordChars, DictionaryNode activeNode) {
+		for(int i = 0; i < baseLanguageWordChars.length; i++) {
     		try {
 				activeNode = activeNode.getNode(baseLanguageWordChars[i]);
 			} catch (NodeNotFound e) {
@@ -31,16 +38,26 @@ public class Dictionary {
 				activeNode = newNode;
 			}
     	}
+		return activeNode;
+	}
+    
+    public void addTranslationsToWord(String baseLanguageWord, Collection<String> translatedWords) {
+    	char[] baseLanguageWordChars = baseLanguageWord.toCharArray();
     	
-    	activeNode.addTranslation(translatedWord);
+    	DictionaryNode activeNode = getWordNode(baseLanguageWordChars, initNode);
+    	activeNode.addTranslation(translatedWords);
     }
     
-    public List<String> getTranslations(String baseLanguageWord) throws NodeNotFound {
+    public List<String> getTranslations(String baseLanguageWord) throws WordNotFound {
     	char[] baseLanguageWordChars = baseLanguageWord.toCharArray();
     	
     	DictionaryNode activeNode = initNode;
     	for(int i = 0; i < baseLanguageWordChars.length; i++) {
-			activeNode = activeNode.getNode(baseLanguageWordChars[i]);
+    		try {
+    			activeNode = activeNode.getNode(baseLanguageWordChars[i]);
+    		} catch (NodeNotFound e) {
+    			throw new WordNotFound();
+    		}
     	}
     	
     	return activeNode.getTranslations();

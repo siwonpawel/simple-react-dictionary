@@ -1,5 +1,6 @@
 package psk.dictionary.model;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +31,14 @@ public class DictionaryNode {
     
     public void addTranslation(String translation) {
     	translations.add(translation);
+    }
+    
+    public void addTranslation(Collection<String> newTranslations) {
+    	
+    	for(String translation : newTranslations) {
+    		if(!this.translations.contains(translation))
+    			translations.add(translation);
+    	}
     }
     
     public void addNode(char c, DictionaryNode node) {
