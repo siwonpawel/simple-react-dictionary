@@ -3,11 +3,10 @@ import { Button, Icon, Input } from "antd";
 
 class Dictionary extends Component {
   state = {
-    translation: "jabłko",
+    translation: "(Czeka na podanie)",
     inputLang: "POLSKI",
     outputLang: "ANGIELSKI",
-    inputWord: "",
-    textareaSize: { minRows: 12, maxRows: 12 }
+    inputWord: ""
   };
   onTranslateHandler = () => {
     console.log(`Input word: ${this.state.inputWord}`);
@@ -17,9 +16,13 @@ class Dictionary extends Component {
     return (
       <div className="dictionary">
         <header className="dict-header">
-          <p>{this.state.inputLang}</p>
+          <p>
+            {this.state.inputLang}
+          </p>
 
-          <p>{this.state.outputLang}</p>
+          <p>
+            {this.state.outputLang}
+          </p>
         </header>
         <Button
           onClick={() => {
@@ -36,15 +39,14 @@ class Dictionary extends Component {
         </Button>
         <div className="dict-logic">
           <div className="input-word">
-            <Input.TextArea
-              autosize={this.state.textareaSize}
+            <Input
               value={this.state.inputWord}
               onChange={e => this.setState({ inputWord: e.target.value })}
             />
           </div>
 
           <div className="output-word">
-            TŁUMACZENIE:{" "}
+            TŁUMACZENIE: <br />
             <div className="translation-output">{this.state.translation}</div>
           </div>
         </div>
