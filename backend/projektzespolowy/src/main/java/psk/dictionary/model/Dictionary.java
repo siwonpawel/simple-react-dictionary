@@ -1,7 +1,10 @@
 package psk.dictionary.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import psk.dictionary.exception.NodeNotFound;
 import psk.dictionary.exception.WordNotFound;
@@ -45,6 +48,13 @@ public class Dictionary {
     	char[] baseLanguageWordChars = baseLanguageWord.toCharArray();
     	
     	DictionaryNode activeNode = getWordNode(baseLanguageWordChars, initNode);
+    	activeNode.addTranslations(translatedWords);
+    }
+    
+    public void addTranslationToWord(String baseLanguageWord, String translatedWords) {
+    	char[] baseLanguageWordChars = baseLanguageWord.toCharArray();
+    	
+    	DictionaryNode activeNode = getWordNode(baseLanguageWordChars, initNode);
     	activeNode.addTranslation(translatedWords);
     }
     
@@ -60,7 +70,55 @@ public class Dictionary {
     		}
     	}
     	
-    	return activeNode.getTranslations();
+    	List<String> translations = activeNode.getTranslations();
+    	
+    	if(translations.size() == 0) {
+    		throw new WordNotFound();
+    	}
+    	
+    	return translations;
+    }
+    
+    public void removeTranslation(String baseLanguageWord, String translatedWord) {
+    	DictionaryNode activeNode = getWordNode(baseLanguageWord.toCharArray(), initNode);
+    	activeNode.removeTranslation(translatedWord);
+    }
+    
+    public void removeTranslations(String baseLanguageWord, List<String> translations) {
+    	DictionaryNode activeNode = getWordNode(baseLanguageWord.toCharArray(), initNode);
+    	activeNode.removeTranslations(translations);
+    }
+    
+    public void removeWord(String baseLanguageWord) {
+    	DictionaryNode activeNode = getWordNode(baseLanguageWord.toCharArray(), initNode);
+    	activeNode.removeWord();
+    }
+    
+    public List<String> getTips(String word) {
+    	List<String> tips = new ArrayList<>();
+    	
+    	DictionaryNode activeNode = getWordNode(word.toCharArray(), initNode);
+    	
+    	addTips(word, tips, activeNode);
+    	
+    	return tips;
+    }
+    
+    private void addTips(String word, List<String> tips, DictionaryNode node) {
+    	if(tips.size() > 10)
+    		return;
+    	
+    	if(node.getTranslations().size() != 0) {
+    		tips.add(word);
+    	}
+    	
+    	Map<Character, DictionaryNode> nextNodes = node.getNextNodes();
+    	Set<Character> keys = nextNodes.keySet();
+    	
+    	for(Character key : keys) {
+    		addTips(word + key, tips, nextNodes.get(key));
+    	}
+    	
     }
 
 	public String getBaseLanguage() {

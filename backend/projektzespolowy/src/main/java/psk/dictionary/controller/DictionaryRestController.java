@@ -16,6 +16,7 @@ import psk.dictionary.exception.DictionaryNotFound;
 import psk.dictionary.exception.WordNotFound;
 import psk.dictionary.repository.DictionaryRepository;
 import psk.dictionary.rest.DictionaryDAO;
+import psk.dictionary.rest.EditTranslationDAO;
 import psk.dictionary.rest.TranslationsDAO;
 
 @RestController
@@ -54,10 +55,48 @@ public class DictionaryRestController {
 	}
 	
 	@RequestMapping(value="/{baseLanguage}/{translatedLanguage}/{word}", method = RequestMethod.POST)
-	
 	public ResponseEntity<HttpStatus> addTranslations(@PathVariable String baseLanguage, @PathVariable String translatedLanguage, @PathVariable String word, @RequestBody TranslationsDAO translations){
 		try {
 			dictionaryRepository.addTranslations(baseLanguage, translatedLanguage, word, translations.getTranslations());
+			return ResponseEntity.ok().build();
+		} catch (WordNotFound e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (DictionaryNotFound e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	@RequestMapping(value="/{baseLanguage}/{translatedLanguage}/{word}", method = RequestMethod.DELETE)
+	public ResponseEntity<HttpStatus> removeWord(@PathVariable String baseLanguage, @PathVariable String translatedLanguage, @PathVariable String word) {
+		try {
+			dictionaryRepository.removeWord(baseLanguage, translatedLanguage, word);
+			return ResponseEntity.ok().build();
+		} catch (WordNotFound e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (DictionaryNotFound e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	@RequestMapping(value="/tips/{baseLanguage}/{translatedLanguage}/{word}", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> getTips(@PathVariable String baseLanguage, @PathVariable String translatedLanguage, @PathVariable String word) {
+		try {
+			List<String> tips = dictionaryRepository.getTips(baseLanguage, translatedLanguage, word);
+			return ResponseEntity.ok().body(tips);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	@RequestMapping(value="/translation/{baseLanguage}/{translatedLanguage}/{word}", method = RequestMethod.DELETE)
+	public ResponseEntity<HttpStatus> removeTranslations(@PathVariable String baseLanguage, @PathVariable String translatedLanguage, @PathVariable String word, @RequestBody EditTranslationDAO editTranslation) {
+		try {
+			dictionaryRepository.removeTranslation(baseLanguage, translatedLanguage, word, editTranslation.getOldTranslation());
+			dictionaryRepository.addTranslation(baseLanguage, translatedLanguage, word, editTranslation.getNewTranslation());
 			return ResponseEntity.ok().build();
 		} catch (WordNotFound e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

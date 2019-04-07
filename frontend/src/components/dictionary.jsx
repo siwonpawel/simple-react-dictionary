@@ -14,7 +14,7 @@ class Dictionary extends Component {
   };
   onTranslateHandler = () => {
     const apiUrl =
-      "localhost:8080/api/dictionary" +
+      "http://localhost:8080/api/dictionary" +
       (this.state.inputLang === "POLSKI"
         ? `/pl/en/${this.state.inputWord}`
         : `/en/pl/${this.state.inputWord}`);
