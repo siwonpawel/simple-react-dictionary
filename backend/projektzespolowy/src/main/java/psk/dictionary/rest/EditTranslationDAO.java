@@ -1,6 +1,6 @@
 package psk.dictionary.rest;
 
-public class EditTranslationDAO {
+public class EditTranslationDAO { 
 
 	private String oldTranslation;
 	private String newTranslation;
