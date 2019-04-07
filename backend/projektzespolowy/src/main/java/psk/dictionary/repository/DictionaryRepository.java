@@ -50,9 +50,29 @@ public class DictionaryRepository {
 		return dictionary.getTranslations(word);
 	}
 	
+	public void addTranslation(String baseLanguage, String translatedLanguage, String word, String translation) throws DictionaryNotFound, WordNotFound {
+		Dictionary dictionary = getDictionary(baseLanguage, translatedLanguage);
+		dictionary.addTranslationToWord(word, translation);
+	}
+	
+	public void removeTranslation(String baseLanguage, String translatedLanguage, String word, String translation) throws DictionaryNotFound, WordNotFound {
+		Dictionary dictionary = getDictionary(baseLanguage, translatedLanguage);
+		dictionary.removeTranslation(word, translation);
+	}
+	
 	public void addTranslations(String baseLanguage, String translatedLanguage, String word, List<String> translations) throws DictionaryNotFound, WordNotFound {
 		Dictionary dictionary = getDictionary(baseLanguage, translatedLanguage);
 		dictionary.addTranslationsToWord(word, translations);
+	}
+	
+	public void removeWord(String baseLanguage, String translatedLanguage, String word) throws WordNotFound, DictionaryNotFound {
+		Dictionary dictionary = getDictionary(baseLanguage, translatedLanguage);
+		dictionary.removeWord(word);
+	}
+	
+	public List<String> getTips(String baseLanguage, String translatedLanguage, String word) throws DictionaryNotFound {
+		Dictionary dictionary = getDictionary(baseLanguage, translatedLanguage);
+		return dictionary.getTips(word);
 	}
 	
 	private Dictionary getDictionary(String baseLanguage, String translatedLanguage) throws DictionaryNotFound {
