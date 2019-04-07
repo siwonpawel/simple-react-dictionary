@@ -22,6 +22,9 @@ class WordForm extends Component {
   render() {
     return (
       <Form className="add-word-form">
+        <Button type="ghost" onClick={() => this.props.history.push("/")}>
+          Powrót
+        </Button>
         <h1>Dodaj tłumaczenie do słownika</h1>
         <Form.Item>
           <Input
