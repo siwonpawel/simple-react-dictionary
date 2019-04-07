@@ -8,9 +8,7 @@ class Dictionary extends Component {
     translation: "(Czeka na podanie)",
     inputLang: "POLSKI",
     outputLang: "ANGIELSKI",
-    inputWord: "",
-    plresults: ["mama", "czerwony", "niebieski", "czarny"],
-    enresults: ["apple", "orange", "red", "blue"]
+    inputWord: ""
   };
   onTranslateHandler = () => {
     const apiUrl =
@@ -26,14 +24,6 @@ class Dictionary extends Component {
       })
       .catch(err => console.log(err));
     this.setState({ inputWord: "" });
-  };
-  handleSearch = value => {
-    this.setState({
-      plresults: !value ? [] : [value, value + value, value + value + value]
-    });
-  };
-  onSelect = value => {
-    this.setState({ inputWord: value });
   };
   render() {
     return (
@@ -62,18 +52,9 @@ class Dictionary extends Component {
         </Button>
         <div className="dict-logic">
           <div className="input-word">
-            <AutoComplete
-              className="input"
+            <Input
               value={this.state.inputWord}
-              onChange={value => this.setState({ inputWord: value })}
-              onSelect={this.onSelec}
-              onSearch={this.onSearch}
-              dataSource={this.state.plresults}
-              filterOption={(inputValue, option) =>
-                option.props.children
-                  .toUpperCase()
-                  .indexOf(inputValue.toUpperCase()) !== -1}
-              placeholder=""
+              onChange={e => this.setState({ inputWord: e.target.value })}
             />
           </div>
 
