@@ -6,9 +6,6 @@ import "./App.css";
 
 class App extends Component {
   render() {
-<<<<<<< HEAD
-    return <div />;
-=======
     return (
       <div className="app-wrapper">
         <header className="main-header">Słownik polsko-angielski</header>
@@ -25,7 +22,6 @@ class App extends Component {
         </footer>
       </div>
     );
->>>>>>> bb54f95789632753e191781c15a74555c9f5ec33
   }
 }
 

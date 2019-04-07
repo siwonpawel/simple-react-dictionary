@@ -4,12 +4,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 class Dictionary extends Component {
-<<<<<<< HEAD
-  render() {
-    return (
-      <div>
-        <h1>Hellow</h1>
-=======
   state = {
     translation: "(Czeka na podanie)",
     inputLang: "POLSKI",
@@ -73,7 +67,6 @@ class Dictionary extends Component {
           Tłumacz
         </Button>
         lub <Link to="/add-word">Dodaj nowe słowo</Link>
->>>>>>> bb54f95789632753e191781c15a74555c9f5ec33
       </div>
     );
   }
