@@ -3,6 +3,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import Dictionary from "./components/dictionary";
 import WordForm from "./components/wordForm";
 import "./App.css";
+import Axios from "axios";
 
 class App extends Component {
   render() {
@@ -22,6 +23,11 @@ class App extends Component {
         </footer>
       </div>
     );
+  }
+  componentDidMount() {
+    Axios.get("http://localhost:8080/api/dictionary")
+    .then(console.log)
+    .catch(console.log);
   }
 }
 
