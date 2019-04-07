@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Button, Icon, Input } from "antd";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 class Dictionary extends Component {
   state = {
@@ -9,7 +11,18 @@ class Dictionary extends Component {
     inputWord: ""
   };
   onTranslateHandler = () => {
-    console.log(`Input word: ${this.state.inputWord}`);
+    const apiUrl =
+      "localhost:8080/api/dictionary" +
+      (this.state.inputLang === "POLSKI"
+        ? `/pl/en/${this.state.inputWord}`
+        : `/en/pl/${this.state.inputWord}`);
+
+    axios
+      .get(apiUrl)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
     this.setState({ inputWord: "" });
   };
   render() {
@@ -50,10 +63,10 @@ class Dictionary extends Component {
             <div className="translation-output">{this.state.translation}</div>
           </div>
         </div>
-
         <Button onClick={this.onTranslateHandler} type="primary">
           Tłumacz
         </Button>
+        lub <Link to="/add-word">Dodaj nowe słowo</Link>
       </div>
     );
   }
