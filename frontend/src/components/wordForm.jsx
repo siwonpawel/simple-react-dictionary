@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Input, Button } from "antd";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 class WordForm extends Component {
   state = {
@@ -9,13 +10,13 @@ class WordForm extends Component {
   };
   handleSubmit = () => {
     const { enword, plword } = this.state;
-    const apiUrl = "localhost:8080/api/dictionary/pl/en" + plword;
+    const apiUrl = "http://localhost:8080/api/dictionary/pl/en/" + plword;
     axios
       .post(apiUrl, {
         translations: [enword]
       })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(res => toast.success("Udało się dodać tłumaczenie do słownika"))
+      .catch(err => toast.error(err));
 
     this.setState({ enword: "", plword: "" });
   };

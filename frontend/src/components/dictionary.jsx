@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Icon, Input, AutoComplete } from "antd";
+import { Button, Icon, Input } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 class Dictionary extends Component {
   state = {
@@ -20,10 +21,9 @@ class Dictionary extends Component {
     axios
       .get(apiUrl)
       .then(res => {
-        console.log(res);
+        this.setState({ translation: res.data.translations });
       })
-      .catch(err => console.log(err));
-    this.setState({ inputWord: "" });
+      .catch(err => toast.error("Nie ma takiego słowa w słowniku"));
   };
   render() {
     return (
