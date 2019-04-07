@@ -18,6 +18,10 @@ public class DictionaryNode {
         nextNodes = new LinkedHashMap<>();
     }
     
+    public Map<Character, DictionaryNode> getNextNodes() {
+    	return nextNodes;
+    }
+    
     public DictionaryNode getNode(char c) throws NodeNotFound {
     	if(!nextNodes.containsKey(c)) {
     		throw new NodeNotFound();
@@ -30,14 +34,41 @@ public class DictionaryNode {
     }
     
     public void addTranslation(String translation) {
+    	
+    	for(String w : translations) {
+    		if(w.equalsIgnoreCase(translation))
+    			return;
+    	}
+    	
     	translations.add(translation);
     }
     
-    public void addTranslation(Collection<String> newTranslations) {
+    public void removeTranslation(String translation) {
+    	
+    	int i = -1;
+    	for(String word : translations) {
+    		i++;
+    		if(translation.equalsIgnoreCase(word))
+    			break;
+    	}
+    	
+    	translations.remove(i);
+    }
+    
+    public void removeTranslations(List<String> translations) {
+    	for(String word : translations) {
+    		removeTranslation(word);
+    	}
+    }
+    
+    public void removeWord() {
+    	translations.clear();
+    }
+    
+    public void addTranslations(Collection<String> newTranslations) {
     	
     	for(String translation : newTranslations) {
-    		if(!this.translations.contains(translation))
-    			translations.add(translation);
+    		addTranslation(translation);
     	}
     }
     

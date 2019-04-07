@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "beb47c84-b828-4da5-b56a-a980fa5e8989",
+		"_postman_id": "f7b00238-21bd-4342-a072-791bd686b1d9",
 		"name": "dictionary",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -56,7 +56,34 @@
 			"response": []
 		},
 		{
-			"name": "dodanie słów",
+			"name": "pobranie podpowiedzi",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/api/dictionary/tips/pl/en/kot",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"dictionary",
+						"tips",
+						"pl",
+						"en",
+						"kot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "dodanie nowego słowa",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -69,7 +96,40 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"translations\": [\"pussy\"]\n}"
+					"raw": "{\n\t\"translations\": [\"cats\"]\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/dictionary/pl/en/koty",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"dictionary",
+						"pl",
+						"en",
+						"koty"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "dodanie tłumaczeń do słowa",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"translations\": [\"kitty\"]\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/api/dictionary/pl/en/kot",
@@ -80,6 +140,66 @@
 					"path": [
 						"api",
 						"dictionary",
+						"pl",
+						"en",
+						"kot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usuniecie slowa ze slownika",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/api/dictionary/pl/en/kot",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"dictionary",
+						"pl",
+						"en",
+						"kot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usuniecie tlumaczen ze slowa",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"translations\": [\"cats\"]\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/dictionary/translation/pl/en/kot",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"dictionary",
+						"translation",
 						"pl",
 						"en",
 						"kot"
