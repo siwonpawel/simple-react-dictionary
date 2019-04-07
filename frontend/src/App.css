@@ -59,7 +59,7 @@
   font-size: 30px;
   text-align: center;
   padding: 10px;
-  height: 40vh;
+  height: 10vh;
 }
 .output-word {
   width: 50%;
@@ -82,4 +82,12 @@
   -webkit-box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
   box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+}
+
+.suggestions {
+  -webkit-box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 5px 39px -5px rgba(0, 0, 0, 0.75);
+  list-style-type: none;
+  font-size: 20px;
 }
