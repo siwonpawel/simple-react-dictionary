@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Icon, Input } from "antd";
+import { Button, Icon, Input, AutoComplete } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -8,7 +8,9 @@ class Dictionary extends Component {
     translation: "(Czeka na podanie)",
     inputLang: "POLSKI",
     outputLang: "ANGIELSKI",
-    inputWord: ""
+    inputWord: "",
+    plresults: ["mama", "czerwony", "niebieski", "czarny"],
+    enresults: ["apple", "orange", "red", "blue"]
   };
   onTranslateHandler = () => {
     const apiUrl =
@@ -24,6 +26,14 @@ class Dictionary extends Component {
       })
       .catch(err => console.log(err));
     this.setState({ inputWord: "" });
+  };
+  handleSearch = value => {
+    this.setState({
+      plresults: !value ? [] : [value, value + value, value + value + value]
+    });
+  };
+  onSelect = value => {
+    this.setState({ inputWord: value });
   };
   render() {
     return (
@@ -52,9 +62,18 @@ class Dictionary extends Component {
         </Button>
         <div className="dict-logic">
           <div className="input-word">
-            <Input
+            <AutoComplete
+              className="input"
               value={this.state.inputWord}
-              onChange={e => this.setState({ inputWord: e.target.value })}
+              onChange={value => this.setState({ inputWord: value })}
+              onSelect={this.onSelec}
+              onSearch={this.onSearch}
+              dataSource={this.state.plresults}
+              filterOption={(inputValue, option) =>
+                option.props.children
+                  .toUpperCase()
+                  .indexOf(inputValue.toUpperCase()) !== -1}
+              placeholder=""
             />
           </div>
 

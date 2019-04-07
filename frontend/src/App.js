@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Redirect, Switch, Link } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Dictionary from "./components/dictionary";
 import WordForm from "./components/wordForm";
 import "./App.css";
