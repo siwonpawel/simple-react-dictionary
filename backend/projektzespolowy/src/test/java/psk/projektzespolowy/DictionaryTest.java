@@ -31,24 +31,7 @@ public class DictionaryTest {
 	
 	@Test
 	public void getWord() {
-		/*
-		String baseLanguageWord = "kot";
-		String translatedWord = "cat";
-		
-		addWord();
-		
-		List<String> getWord = null;
-		try {
-			getWord = dictionary.getTranslations(baseLanguageWord);
-		} catch (NodeNotFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail();
-		}
-		
-		
-		assertTrue(getWord.contains(translatedWord));
-		*/
+
 	}
     
 }

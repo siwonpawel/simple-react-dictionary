@@ -131,6 +131,10 @@ public class Dictionary {
     	}
     	
     }
+    
+    public DictionaryNode getRootNode() {
+    	return this.initNode;
+    }
 
 	public String getBaseLanguage() {
 		return baseLanguage;

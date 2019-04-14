@@ -1,6 +1,7 @@
 package psk.dictionary.controller;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import psk.dictionary.exception.DictionaryNotFound;
 import psk.dictionary.exception.WordNotFound;
+import psk.dictionary.model.Dictionary;
 import psk.dictionary.repository.DictionaryRepository;
 import psk.dictionary.rest.DictionaryDAO;
 import psk.dictionary.rest.EditTranslationDAO;
 import psk.dictionary.rest.TranslationsDAO;
+import psk.dictionary.service.SaveToFile;
 
 @CrossOrigin
 @RestController
@@ -60,6 +63,7 @@ public class DictionaryRestController {
 	public ResponseEntity<HttpStatus> addTranslations(@PathVariable String baseLanguage, @PathVariable String translatedLanguage, @PathVariable String word, @RequestBody TranslationsDAO translations){
 		try {
 			dictionaryRepository.addTranslations(baseLanguage, translatedLanguage, word, translations.getTranslations());
+			dictionaryRepository.addTranslations(translatedLanguage, baseLanguage, word, translations.getTranslations());
 			return ResponseEntity.ok().build();
 		} catch (WordNotFound e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -73,6 +77,10 @@ public class DictionaryRestController {
 	@RequestMapping(value="/{baseLanguage}/{translatedLanguage}/{word}", method = RequestMethod.DELETE)
 	public ResponseEntity<HttpStatus> removeWord(@PathVariable String baseLanguage, @PathVariable String translatedLanguage, @PathVariable String word) {
 		try {
+			List<String> words = dictionaryRepository.getWords(baseLanguage, translatedLanguage, word);
+			for(String w : words) {
+				dictionaryRepository.removeWord(translatedLanguage, baseLanguage, w);
+			}
 			dictionaryRepository.removeWord(baseLanguage, translatedLanguage, word);
 			return ResponseEntity.ok().build();
 		} catch (WordNotFound e) {
@@ -99,6 +107,9 @@ public class DictionaryRestController {
 		try {
 			dictionaryRepository.removeTranslation(baseLanguage, translatedLanguage, word, editTranslation.getOldTranslation());
 			dictionaryRepository.addTranslation(baseLanguage, translatedLanguage, word, editTranslation.getNewTranslation());
+			
+			dictionaryRepository.removeTranslation(baseLanguage, translatedLanguage, word, editTranslation.getOldTranslation());
+			dictionaryRepository.addTranslation(baseLanguage, translatedLanguage, word, editTranslation.getNewTranslation());
 			return ResponseEntity.ok().build();
 		} catch (WordNotFound e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -107,5 +118,21 @@ public class DictionaryRestController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
+	}
+	
+	@RequestMapping(value="/dictionary/{baseLanguage}/{translatedLanguage}", method = RequestMethod.PUT)
+	public ResponseEntity<HttpStatus> saveToFile(@PathVariable String baseLanguage, @PathVariable String translatedLanguage) {
+		try {
+			Dictionary dictionary = dictionaryRepository.getDictionary(baseLanguage, translatedLanguage);
+			String dictionaryFilePath = dictionaryRepository.getDictionaryProperties().getDictionaryFilePath();
+			SaveToFile.saveDictionary(dictionary, dictionaryFilePath); 
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		} catch (DictionaryNotFound e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).build();		
+		
 	}
 }

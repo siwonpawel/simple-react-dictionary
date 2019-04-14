@@ -75,7 +75,7 @@ public class DictionaryRepository {
 		return dictionary.getTips(word);
 	}
 	
-	private Dictionary getDictionary(String baseLanguage, String translatedLanguage) throws DictionaryNotFound {
+	public Dictionary getDictionary(String baseLanguage, String translatedLanguage) throws DictionaryNotFound {
 		
 		Optional<Dictionary> dictionary = dictionaries.stream()
 			.filter(e -> baseLanguage.equalsIgnoreCase(e.getBaseLanguage()))
