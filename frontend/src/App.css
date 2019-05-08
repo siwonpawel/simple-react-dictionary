@@ -51,26 +51,26 @@
 }
 .input-word {
   width: 50%;
-  margin: 5px 5px;
-  height: 40vh;
-  font-size: 50px;
+  margin: 10px 10px;
+  height: 20vh;
+  font-size: 30px;
 }
 .input-word input {
-  font-size: 30px;
+  font-size: 25px;
   text-align: center;
   padding: 10px;
-  height: 40vh;
+  height: 20vh;
 }
 .output-word {
   width: 50%;
-  margin: 5px 5px;
+  margin: 10px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .add-word-form {

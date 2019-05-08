@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
-import Dictionary from "./components/dictionary";
-import WordForm from "./components/wordForm";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
-import Axios from "axios";
+import React, { Component } from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import Dictionary from './components/dictionary';
+import WordForm from './components/wordForm';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 class App extends Component {
   render() {
@@ -35,11 +34,6 @@ class App extends Component {
         </footer>
       </div>
     );
-  }
-  componentDidMount() {
-    Axios.get("http://localhost:8080/api/dictionary")
-      .then(console.log)
-      .catch(console.log);
   }
 }
 

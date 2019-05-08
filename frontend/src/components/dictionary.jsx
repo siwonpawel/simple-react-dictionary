@@ -1,29 +1,38 @@
-import React, { Component } from "react";
-import { Button, Icon, Input } from "antd";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, { Component } from 'react';
+import { Button, Icon, Input } from 'antd';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 class Dictionary extends Component {
   state = {
-    translation: "(Czeka na podanie)",
-    inputLang: "POLSKI",
-    outputLang: "ANGIELSKI",
-    inputWord: ""
+    translations: '(Czeka na podanie)',
+    inputLang: 'POLSKI',
+    outputLang: 'ANGIELSKI',
+    inputWord: ''
   };
   onTranslateHandler = () => {
     const apiUrl =
-      "http://localhost:8080/api/dictionary" +
-      (this.state.inputLang === "POLSKI"
+      'http://localhost:8080/api/dictionary' +
+      (this.state.inputLang === 'POLSKI'
         ? `/pl/en/${this.state.inputWord}`
         : `/en/pl/${this.state.inputWord}`);
 
     axios
       .get(apiUrl)
       .then(res => {
-        this.setState({ translation: res.data.translations });
+        if (res.data.translations.length > 1) {
+          const translations = res.data.translations.reduce(
+            (translations, t) => {
+              return translations + ', ' + t;
+            }
+          );
+          this.setState({ translations });
+        } else {
+          this.setState({ translations: res.data.translations });
+        }
       })
-      .catch(err => toast.error("Nie ma takiego słowa w słowniku"));
+      .catch(err => toast.error('Nie ma takiego słowa w słowniku'));
   };
   render() {
     return (
@@ -41,9 +50,9 @@ class Dictionary extends Component {
           onClick={() => {
             this.setState({
               inputLang:
-                this.state.inputLang === "POLSKI" ? "ANGIELSKI" : "POLSKI",
+                this.state.inputLang === 'POLSKI' ? 'ANGIELSKI' : 'POLSKI',
               outputLang:
-                this.state.outputLang === "POLSKI" ? "ANGIELSKI" : "POLSKI"
+                this.state.outputLang === 'POLSKI' ? 'ANGIELSKI' : 'POLSKI'
             });
           }}
           type="primary"
@@ -60,7 +69,7 @@ class Dictionary extends Component {
 
           <div className="output-word">
             TŁUMACZENIE: <br />
-            <div className="translation-output">{this.state.translation}</div>
+            <div className="translation-output">{this.state.translations}</div>
           </div>
         </div>
         <Button onClick={this.onTranslateHandler} type="primary">
