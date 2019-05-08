@@ -63,7 +63,9 @@ public class DictionaryRestController {
 	public ResponseEntity<HttpStatus> addTranslations(@PathVariable String baseLanguage, @PathVariable String translatedLanguage, @PathVariable String word, @RequestBody TranslationsDAO translations){
 		try {
 			dictionaryRepository.addTranslations(baseLanguage, translatedLanguage, word, translations.getTranslations());
-			dictionaryRepository.addTranslations(translatedLanguage, baseLanguage, word, translations.getTranslations());
+			for(String translation : translations.getTranslations()) {
+				dictionaryRepository.addTranslation(translatedLanguage, baseLanguage, translation, word);
+			}
 			return ResponseEntity.ok().build();
 		} catch (WordNotFound e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
