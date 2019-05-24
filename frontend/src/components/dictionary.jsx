@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { Button, Icon, Input } from 'antd';
+import { Button, Icon, AutoComplete } from 'antd';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import debounce from 'lodash.debounce';
 
 class Dictionary extends Component {
   state = {
     translations: '(Czeka na podanie)',
     inputLang: 'POLSKI',
     outputLang: 'ANGIELSKI',
-    inputWord: ''
+    inputWord: '',
+    tips: []
   };
   onTranslateHandler = () => {
     const apiUrl =
@@ -34,6 +36,26 @@ class Dictionary extends Component {
       })
       .catch(err => toast.error('Nie ma takiego słowa w słowniku'));
   };
+  onChangeHandler = e => {
+    this.setState({ inputWord: e });
+    this.debounceFunction();
+  };
+
+  debounceFunction = debounce(() => {
+    if (this.state.inputWord) {
+      const apiUrl =
+        'http://localhost:8080/api/dictionary/tips' +
+        (this.state.inputLang === 'POLSKI'
+          ? `/pl/en/${this.state.inputWord}`
+          : `/en/pl/${this.state.inputWord}`);
+      axios
+        .get(apiUrl)
+        .then(res => {
+          this.setState({ tips: res.data });
+        })
+        .catch(err => console.log(err));
+    }
+  }, 1000);
   render() {
     return (
       <div className="dictionary">
@@ -61,9 +83,17 @@ class Dictionary extends Component {
         </Button>
         <div className="dict-logic">
           <div className="input-word">
-            <Input
+            <AutoComplete
+              style={{
+                width: '100%'
+              }}
               value={this.state.inputWord}
-              onChange={e => this.setState({ inputWord: e.target.value })}
+              dataSource={this.state.tips}
+              onChange={e => this.onChangeHandler(e)}
+              filterOption={(inputValue, option) =>
+                option.props.children
+                  .toUpperCase()
+                  .indexOf(inputValue.toUpperCase()) !== -1}
             />
           </div>
 
