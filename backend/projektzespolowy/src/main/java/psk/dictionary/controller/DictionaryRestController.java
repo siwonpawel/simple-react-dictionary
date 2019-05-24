@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import psk.dictionary.config.DictionaryProperties;
 import psk.dictionary.exception.DictionaryNotFound;
 import psk.dictionary.exception.WordNotFound;
 import psk.dictionary.model.Dictionary;
@@ -30,6 +31,9 @@ public class DictionaryRestController {
 	
 	@Autowired
 	private DictionaryRepository dictionaryRepository;
+	
+	@Autowired
+	DictionaryProperties dictionaryProperties;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public ResponseEntity<List<DictionaryDAO>> getDictionares() {
@@ -66,6 +70,8 @@ public class DictionaryRestController {
 			for(String translation : translations.getTranslations()) {
 				dictionaryRepository.addTranslation(translatedLanguage, baseLanguage, translation, word);
 			}
+			
+			saveToFile(baseLanguage, translatedLanguage);
 			return ResponseEntity.ok().build();
 		} catch (WordNotFound e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -84,6 +90,8 @@ public class DictionaryRestController {
 				dictionaryRepository.removeWord(translatedLanguage, baseLanguage, w);
 			}
 			dictionaryRepository.removeWord(baseLanguage, translatedLanguage, word);
+			
+			saveToFile(baseLanguage, translatedLanguage);
 			return ResponseEntity.ok().build();
 		} catch (WordNotFound e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -112,6 +120,7 @@ public class DictionaryRestController {
 			
 			dictionaryRepository.removeTranslation(baseLanguage, translatedLanguage, word, editTranslation.getOldTranslation());
 			dictionaryRepository.addTranslation(baseLanguage, translatedLanguage, word, editTranslation.getNewTranslation());
+			saveToFile(baseLanguage, translatedLanguage);
 			return ResponseEntity.ok().build();
 		} catch (WordNotFound e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -122,19 +131,15 @@ public class DictionaryRestController {
 		}
 	}
 	
-	@RequestMapping(value="/dictionary/{baseLanguage}/{translatedLanguage}", method = RequestMethod.PUT)
-	public ResponseEntity<HttpStatus> saveToFile(@PathVariable String baseLanguage, @PathVariable String translatedLanguage) {
+	private void saveToFile(String baseLanguage, String translatedLanguage) {
 		try {
 			Dictionary dictionary = dictionaryRepository.getDictionary(baseLanguage, translatedLanguage);
 			String dictionaryFilePath = dictionaryRepository.getDictionaryProperties().getDictionaryFilePath();
 			SaveToFile.saveDictionary(dictionary, dictionaryFilePath); 
 		} catch (IOException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			e.printStackTrace();
 		} catch (DictionaryNotFound e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			e.printStackTrace();
 		}
-		
-		return ResponseEntity.status(HttpStatus.OK).build();		
-		
 	}
 }
