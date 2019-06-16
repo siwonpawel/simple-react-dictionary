@@ -19,9 +19,9 @@ import psk.dictionary.exception.DictionaryNotFound;
 import psk.dictionary.exception.WordNotFound;
 import psk.dictionary.model.Dictionary;
 import psk.dictionary.repository.DictionaryRepository;
-import psk.dictionary.rest.DictionaryDAO;
-import psk.dictionary.rest.EditTranslationDAO;
-import psk.dictionary.rest.TranslationsDAO;
+import psk.dictionary.restDAO.DictionaryDAO;
+import psk.dictionary.restDAO.EditTranslationDAO;
+import psk.dictionary.restDAO.TranslationsDAO;
 import psk.dictionary.service.SaveToFile;
 
 @CrossOrigin

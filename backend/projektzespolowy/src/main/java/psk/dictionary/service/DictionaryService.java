@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import psk.dictionary.model.Dictionary;
-import psk.dictionary.rest.DictionaryDAO;
+import psk.dictionary.restDAO.DictionaryDAO;
 
 public class DictionaryService {
 

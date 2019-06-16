@@ -13,7 +13,7 @@ import psk.dictionary.config.DictionaryProperties;
 import psk.dictionary.exception.DictionaryNotFound;
 import psk.dictionary.exception.WordNotFound;
 import psk.dictionary.model.Dictionary;
-import psk.dictionary.rest.DictionaryDAO;
+import psk.dictionary.restDAO.DictionaryDAO;
 import psk.dictionary.service.DecodeFile;
 import psk.dictionary.service.DictionaryService;
 

@@ -1,4 +1,4 @@
-package psk.dictionary.rest;
+package psk.dictionary.restDAO;
 
 import psk.dictionary.model.Dictionary;
 
